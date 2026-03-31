@@ -7,17 +7,21 @@ import Capacitor
  */
 @objc(DeviceInfoPlugin)
 public class DeviceInfoPlugin: CAPPlugin, CAPBridgedPlugin {
-    public let identifier = "DeviceInfoPlugin"
-    public let jsName = "DeviceInfo"
-    public let pluginMethods: [CAPPluginMethod] = [
-        CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise)
-    ]
-    private let implementation = DeviceInfo()
+    @objc func getLocaleInfo(_ call: CAPPluginCall) {
+        let locale = Locale.current
 
-    @objc func echo(_ call: CAPPluginCall) {
-        let value = call.getString("value") ?? ""
+        let currency = locale.currencyCode ?? {
+            if let region = locale.regionCode {
+                return Locale(identifier: "en_\(region)").currencyCode ?? "USD"
+            }
+            return "USD"
+        }()
+
         call.resolve([
-            "value": implementation.echo(value)
+            "language": locale.languageCode ?? "en",
+            "country": locale.regionCode ?? "US",
+            "currency": currency,
+            "identifier": locale.identifier
         ])
     }
 }
