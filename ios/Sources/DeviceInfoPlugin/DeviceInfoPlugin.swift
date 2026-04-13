@@ -6,8 +6,15 @@ import Capacitor
  * here: https://capacitorjs.com/docs/plugins/ios
  */
 @objc(DeviceInfoPlugin)
-public class DeviceInfoPlugin: CAPPlugin, CAPBridgedPlugin {
-    @objc func getLocaleInfo(_ call: CAPPluginCall) {
+@objcMembers
+public class DeviceInfoPlugin: CAPPlugin {
+    public override func load() {
+        print("DeviceInfoPlugin loaded")
+    }
+
+    @objc(getLocaleInfo:)
+    public func getLocaleInfo(_ call: CAPPluginCall) {
+        print("DeviceInfoPlugin.getLocaleInfo called")
         let locale = Locale.current
 
         let currency = locale.currencyCode ?? {
@@ -25,7 +32,9 @@ public class DeviceInfoPlugin: CAPPlugin, CAPBridgedPlugin {
         ])
     }
 
-    @objc func getInfo(_ call: CAPPluginCall) {
+    @objc(getInfo:)
+    public func getInfo(_ call: CAPPluginCall) {
+        print("DeviceInfoPlugin.getInfo called")
         getLocaleInfo(call)
     }
 }
