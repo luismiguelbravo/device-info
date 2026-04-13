@@ -19,4 +19,16 @@ public class DeviceInfoPlugin extends Plugin {
         ret.put("value", implementation.echo(value));
         call.resolve(ret);
     }
+
+    @PluginMethod
+    public void getLocaleInfo(PluginCall call) {
+        JSObject ret = implementation.getLocaleInfo();
+        call.resolve(ret);
+    }
+
+    @PluginMethod
+    public void getInfo(PluginCall call) {
+        JSObject ret = implementation.getLocaleInfo();
+        call.resolve(ret);
+    }
 }

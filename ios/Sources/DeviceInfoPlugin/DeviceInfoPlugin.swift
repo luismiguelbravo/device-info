@@ -24,4 +24,8 @@ public class DeviceInfoPlugin: CAPPlugin, CAPBridgedPlugin {
             "identifier": locale.identifier
         ])
     }
+
+    @objc func getInfo(_ call: CAPPluginCall) {
+        getLocaleInfo(call)
+    }
 }
